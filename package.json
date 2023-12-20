@@ -1,0 +1,19 @@
+{
+  "name": "model",
+  "version": "1.0.0",
+  "description": "- La secțiunea Notițe Curs găsiți ce s-a cerut la curs pentru acest proiect;\r - La secțiunea Observații se află niște notițe personale;\r - La secțiunea Funcționalități aveți funcționalitățile proiectului model;",
+  "main": "index.js",
+  "scripts": {
+    "build:postcss": "set NODE_ENV=production && postcss src\\main\\resources\\static\\css\\style.tailwind.css -o target\\classes\\static\\css\\style.build.tailwind.css",
+    "watch:postcss": "set NODE_ENV=development && postcss src\\main\\resources\\static\\css\\style.tailwind.css -o src\\main\\resources\\static\\css\\style.dev.tailwind.css -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.0"
+  }
+}

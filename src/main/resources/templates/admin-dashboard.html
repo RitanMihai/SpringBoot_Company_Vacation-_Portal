@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- TODO: Look over fragments & Bootstrap OR Tailwind -->
+</head>
+<body>
+<!-- TODO: a editable table with all employees (challenge paging)-->
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>username</th>
+            <th>email</th>
+            <th>current role</th>
+            <th>select new role</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employees}">
+        <form th:action="@{/admin}" th:object="${user}" method="post">
+            <input type="hidden" name="userId" th:value="${employee.id}" />
+            <td th:text="${employee.id}"></td>
+            <td th:text="${employee.username}"></td>
+            <td th:text="${employee.email}"></td>
+            <!-- A list with all employees in this cell, instated of the below line -->
+            <td>
+                <ul>
+                    <p th:each="role : ${employee.roles}" th:text="${role.getName()}"></p>
+                </ul>
+            </td>
+            <td>
+                <select  title="Select a role" id="roles" name="roles" th:field="*{roles}" multiple>
+                    <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                </select>
+            </td>
+            <td>
+                <button type="submit">Change Role</button>
+            </td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

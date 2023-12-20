@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <form th:action="@{/register}" th:object="${user}" method="POST">
+        <div style=" display: flex; flex-direction: column;">
+            <label>Username:</label>
+            <input placeholder="username"
+                   name="username"
+                   th:field="*{username}">
+            <span style="color: red; font-size: small" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">a</span>
+
+            <label>Email: </label>
+            <input placeholder="email"
+                   name="email"
+                   th:field="*{email}">
+            <span style="color: red; font-size: small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+            <label>Password</label>
+            <input placeholder="password"
+                   type="password"
+                   name="password"
+                   th:field="*{password}">
+            <span style="color: red; font-size: small" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            <!-- Check repeat password -->
+            <input placeholder="repeat password"
+                   type="password"
+                   name="repeatPassword"
+                   th:field="*{repeatPassword}">
+            <span style="color: red; font-size: small" th:if="${#fields.hasErrors('repeatPassword')}" th:errors="*{repeatPassword}"></span>
+            <button type="submit">REGISTER</button>
+        </div>
+    </form>
+    <a th:href="@{/login}">Login</a>
+</body>
+</html>
