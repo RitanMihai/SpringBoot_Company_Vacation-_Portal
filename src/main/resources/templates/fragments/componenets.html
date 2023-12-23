@@ -1,0 +1,23 @@
+<!-- Top Bar component that receive the name of the page as parameter -->
+<nav th:fragment="top-bar(currentPage)" class="bg-indigo-500  z-50 text-white py-2 px-4 flex items-center justify-between fixed w-full top-0">
+    <h1 class="text-2xl font-bold">LeaveHub - <span th:text="${currentPage}"></span></h1>
+    <form th:action="@{/logout}" method="post" class="mr-8">
+        <button type="submit" class="hover:underline">Logout</button>
+    </form>
+</nav>
+
+<!-- Side Menu -->
+<aside th:fragment="side-menu(menuItems)" id="logo-sidebar" class="fixed top-0 left-0 z-40 w-30 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <ul class="space-y-2 font-medium">
+            <li th:each="menuItem : ${menuItems}">
+                <a th:href="${menuItem.url}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 640 512" class="h-6 w-6">
+                        <path th:fill="${menuItem.icon.color.hex}" th:d="${menuItem.icon.svgPath}"/>
+                    </svg>
+                    <span class="flex-1 ms-3 ml-2 whitespace-nowrap" th:text="${menuItem.name}">Kanban</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>

@@ -4,16 +4,17 @@ import com.lab.model.model.RoleEntity;
 import com.lab.model.model.UserEntity;
 import com.lab.model.repository.RoleRepository;
 import com.lab.model.service.UserService;
+import com.lab.model.util.Icon;
+import com.lab.model.util.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,16 +33,63 @@ public class AdminController {
     @GetMapping()
     //@PreAuthorize("hasAnyRole('MANAGE_ACCOUNTS')")
     public String open(Model model){
-        List<UserEntity> employees = userService.findAll();
+        List<MenuItem> menu = new ArrayList<>();
 
+        MenuItem home = new MenuItem();
+        home.setName("Home");
+        Icon homeIcon = Icon.HOME;
+        homeIcon.setColor(Icon.IconColor.INDIGO);
+
+        home.setIcon(homeIcon);
+        home.setUrl("/admin");
+        menu.add(home);
+
+        MenuItem roles = new MenuItem();
+        roles.setName("Roles");
+        roles.setUrl("/admin/roles");
+        Icon rolesIcon = Icon.ROLE;
+        rolesIcon.setColor(Icon.IconColor.INDIGO);
+
+        roles.setIcon(rolesIcon);
+        menu.add(roles);
+
+        model.addAttribute("menuItems", menu);
+        return "admin/dashboard";
+    }
+
+    @GetMapping
+    @RequestMapping("/roles")
+    public String openRoles(Model model){
+        List<UserEntity> employees = userService.findAll();
+        List<MenuItem> menu = new ArrayList<>();
+
+        MenuItem home = new MenuItem();
+        home.setName("Home");
+        Icon homeIcon = Icon.HOME;
+        homeIcon.setColor(Icon.IconColor.INDIGO);
+
+        home.setIcon(homeIcon);
+        home.setUrl("/admin");
+        menu.add(home);
+
+        MenuItem roles = new MenuItem();
+        roles.setName("Roles");
+        roles.setUrl("/admin/roles");
+        Icon rolesIcon = Icon.ROLE;
+        rolesIcon.setColor(Icon.IconColor.INDIGO);
+
+        roles.setIcon(rolesIcon);
+        menu.add(roles);
+
+        model.addAttribute("menuItems", menu);
         model.addAttribute("employees", employees);
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("user", new UserEntity());
-        return "admin-dashboard";
+        return "admin/roles";
     }
 
     /* PatchMapping */
-    @PostMapping()
+    @PatchMapping("/roles") /* Partial modification */
     public String updateRole(@RequestParam("userId") Long userId, Model model, @RequestParam("roles") Long ... roles) {
         logger.info("update user called");
         UserEntity user = userService.findById(userId);
@@ -53,6 +101,6 @@ public class AdminController {
             userService.save(user);
         }
 
-        return "redirect:/admin";
+        return "redirect:/admin/roles";
     }
 }

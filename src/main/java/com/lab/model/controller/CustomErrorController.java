@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 @Controller
@@ -30,6 +33,12 @@ public class CustomErrorController implements ErrorController {
             // Customize the model attributes or add custom logic here
             model.addAttribute("errorStatus", status);
             model.addAttribute("errorMessage", "Access Forbidden. You do not have the required role.");
+
+            /* TODO: read from folder all the files */
+            List<String> imageList = Arrays.asList("howling.png", "hello_kitty_house.png", "godzilla_watch.png");
+            String randomImage = imageList.get(new Random().nextInt(imageList.size()));
+            model.addAttribute("randomImage", randomImage);
+
             return "errors/403-forbidden"; // Thymeleaf template name for your custom forbidden page
         }
 

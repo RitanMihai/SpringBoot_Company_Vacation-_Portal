@@ -4,20 +4,51 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>LeaveHub - Login</title>
+    <!-- You can replace the CDN link with a local copy of Tailwind CSS if needed, as in the Medium article.
+     Due to some problems, I decided to rely on a CDN for this project. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body>
-<form th:action="@{/login}" method="POST">
-    <label>Username:</label>
-    <input placeholder="email"
-           name="email">
+<body class="bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-700 min-h-screen flex items-center justify-center">
+<div class="lg:flex lg:items-center lg:justify-between w-full max-w-5xl mx-auto p-8">
+    <!-- Company Logo (Visible only on larger screens) -->
+    <div class="hidden lg:block lg:w-1/3 lg:text-left">
+        <h1 class="text-4xl font-bold text-gray-200 mb-2">LeaveHub</h1>
+        <p class="text-lg text-gray-300">LeaveHub: Empowering Time Off, Connecting Work-Life Balance.</p>
+    </div>
 
-    <label>Password</label>
-    <input placeholder="password"
-           type="password"
-           name="password">
-    <button type="submit">LOGIN</button>
-</form>
-    <a th:href="@{/register}">Register</a>
+    <!-- Login Form -->
+    <div class="bg-white p-8 rounded shadow-md lg:w-2/3 w-full">
+        <!-- Company Logo (Visible only on smaller screens) -->
+        <div class="lg:hidden text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">LeaveHub</h1>
+            <p class="text-sm text-gray-600">LeaveHub: Empowering Time Off, Connecting Work-Life Balance.</p>
+        </div>
+
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
+        <form th:action="@{/login}" method="POST" class="space-y-4">
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input id="email" name="email" type="text" placeholder="insert email"
+                       class="w-full border rounded py-2 px-3 focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                <input id="password" name="password" type="password" placeholder="insert email"
+                       class="w-full border rounded py-2 px-3 focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white py-2 px-4 rounded hover:bg-gradient-to-r hover:from-indigo-700 hover:to-indigo-800 focus:outline-none">
+                LOGIN
+            </button>
+        </form>
+
+        <p class="text-sm text-gray-600 mt-4 text-center">
+            Don't have an account? <a th:href="@{/register}" class="text-indigo-500">Register</a>
+        </p>
+    </div>
+</div>
 </body>
 </html>

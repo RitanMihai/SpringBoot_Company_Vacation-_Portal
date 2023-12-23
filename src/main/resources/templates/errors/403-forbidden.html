@@ -5,10 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Access Forbidden</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>Access Forbidden</h1>
-<p th:text="${errorMessage}"></p>
-Click  <a th:href="@{/home}">Go to home page</a>
+<body class="bg-indigo-800 text-white min-h-screen flex flex-col items-center justify-center animate__animated animate__fadeIn">
+<div class="text-center">
+    <h1 class="text-4xl font-bold mb-4 animate__animated animate__bounceInDown">Access Forbidden</h1>
+    <p th:text="${errorMessage}" class="text-lg mb-6 animate__animated animate__fadeIn"></p>
+    <p class="text-lg mb-6 animate__animated animate__fadeIn">Instated look at this random image from my instagram feed</p>
+    <img th:src="@{'/images/public/' + ${randomImage}}" alt="Random Image" class="mb-6 rounded-lg shadow-lg animate__animated animate__fadeIn">
+    <a th:href="@{/home}" class="text-indigo-200 underline hover:text-indigo-100 animate__animated animate__fadeIn">Go to home page</a>
+</div>
 </body>
 </html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Collapsible Menu</title>
+</head>
+<body class="flex">
+
+<div th:replace="fragments/componenets::top-bar('Admin Dashboard')"></div>
+<div th:replace="fragments/componenets::side-menu(menuItems=${menuItems})"></div>
+
+<div class="flex-1 p-4 ml-32">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+        <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-md overflow-hidden">
+            <thead>
+            <tr class="bg-indigo-500 text-white">
+                <th class="py-2 px-4">ID</th>
+                <th class="py-2 px-4">Username</th>
+                <th class="py-2 px-4">Email</th>
+                <th class="py-2 px-4">Current Role</th>
+                <th class="py-2 px-4">Select New Role(s)</th>
+                <th class="py-2 px-4">Approve</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="employee : ${employees}" class="even:bg-gray-50 odd:bg-white">
+                <form th:action="@{/admin/roles}" th:object="${user}" th:method="patch">
+                    <input type="hidden" name="userId" th:value="${employee.id}" />
+                    <td class="py-2 px-4" th:text="${employee.id}"></td>
+                    <td class="py-2 px-4" th:text="${employee.username}"></td>
+                    <td class="py-2 px-4" th:text="${employee.email}"></td>
+                    <td class="py-2 px-4">
+                        <ul>
+                            <li th:each="role : ${employee.roles}" th:text="${role.getName()}"></li>
+                        </ul>
+                    </td>
+                    <td class="py-2 px-4">
+                        <select title="Select a role" id="roles" name="roles" th:field="*{roles}" multiple class="border rounded py-1 px-2 focus:outline-none focus:border-indigo-500">
+                            <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                        </select>
+                    </td>
+                    <td class="py-2 px-4">
+                        <button type="submit" class="bg-indigo-500 text-white py-1 px-3 rounded hover:bg-indigo-600 focus:outline-none">
+                            Change Role
+                        </button>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

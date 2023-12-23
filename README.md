@@ -2,9 +2,9 @@
 - La secțiunea Notițe Curs găsiți ce s-a cerut la curs pentru acest proiect;
 - La secțiunea Observații se află niște notițe personale;
 - La secțiunea Funcționalități aveți funcționalitățile proiectului model;
-- Am încărcat inclusiv fișerele autogenerate pentru a vedea mai clar cum ar trebui să arate tot, dacă întâmpinați probleme ștergeți package-lock.json, .idea etc. 
+
 ## Funcționalități:
-- 
+- TBA
 
 ## Notițe Curs (Dragoș):
 

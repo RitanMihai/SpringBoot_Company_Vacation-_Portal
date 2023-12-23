@@ -4,8 +4,8 @@
   "description": "- La secțiunea Notițe Curs găsiți ce s-a cerut la curs pentru acest proiect;\r - La secțiunea Observații se află niște notițe personale;\r - La secțiunea Funcționalități aveți funcționalitățile proiectului model;",
   "main": "index.js",
   "scripts": {
-    "build:postcss": "set NODE_ENV=production && postcss src\\main\\resources\\static\\css\\style.tailwind.css -o target\\classes\\static\\css\\style.build.tailwind.css",
-    "watch:postcss": "set NODE_ENV=development && postcss src\\main\\resources\\static\\css\\style.tailwind.css -o src\\main\\resources\\static\\css\\style.dev.tailwind.css -w"
+    "build:postcss": "set NODE_ENV=production && postcss src/main/resources/static/css/style.tailwind.css -o target/classes/static/css/style.build.tailwind.css",
+    "watch:postcss": "set NODE_ENV=development && postcss src/main/resources/static/css/style.tailwind.css -o src/main/resources/static/css/style.dev.tailwind.css -w"
   },
   "keywords": [],
   "author": "",

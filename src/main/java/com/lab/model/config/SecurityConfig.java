@@ -3,8 +3,6 @@ package com.lab.model.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,9 +25,10 @@ public class SecurityConfig {
         http
                 /* Unrestricted access */
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/register", "/index")
+                        .requestMatchers("/register")
                         .permitAll()
-                        .requestMatchers("/admin").hasAuthority("MANAGE_ACCOUNTS")
+                        .requestMatchers("/admin/**").hasAuthority("MANAGE_ACCOUNTS")
+                        .requestMatchers("/images/public/**").permitAll()
                         .requestMatchers("/*")
                         .authenticated()
                 )
@@ -43,7 +42,13 @@ public class SecurityConfig {
                         *  - If is admin we go to the admin-dashboard page
                         *  - If is a type of employee we go to the home page */
                         .successHandler(customAuthenticationSuccessHandler) /* https://www.baeldung.com/spring-redirect-after-login */
-                        .permitAll());
+                        .permitAll())
+                // Logout configuration
+                .logout(logout -> logout
+                        .logoutUrl("/logout") // Specify the logout URL
+                        .logoutSuccessUrl("/login?logout") // Redirect to login page after logout
+                        .invalidateHttpSession(true) // Invalidate session
+                );
         return http.build();
     }
 
