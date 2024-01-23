@@ -9,12 +9,13 @@ import com.lab.model.util.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -59,9 +60,23 @@ public class AdminController {
 
     @GetMapping
     @RequestMapping("/roles")
-    public String openRoles(Model model){
-        List<UserEntity> employees = userService.findAll();
+    public String openRoles(Model model, @RequestParam(defaultValue = "0") int page){
+        final int PAGE_SIZE = 3; /* At the moment there is no way to change size from GUI, so this is hardcoded */
+        Page<UserEntity> userPage  = userService.findAll(page, PAGE_SIZE);
+        List<UserEntity> employees = userPage.getContent();
         List<MenuItem> menu = new ArrayList<>();
+
+        /* IMPORTANT!
+        *  FontAwesome finally works in the frontend, and I don't know why. Therefore, the below implementation is
+        * not necessary anymore, neither is the one from the menu. I will not refactor the code, both because:
+        *  - I am proud of this mess.
+        *  - It's working now, but maybe it'll stop working again in the future. :)))
+        * */
+        HashMap<String, Icon> icons = new HashMap<>();
+        icons.put("ARROW_LEFT", Icon.ARROW_LEFT);
+        icons.put("ARROW_RIGHT", Icon.ARROW_RIGHT);
+        icons.put("DOUBLE_ARROW_LEFT", Icon.DOUBLE_ARROW_LEFT);
+        icons.put("DOUBLE_ARROW_RIGHT", Icon.DOUBLE_ARROW_RIGHT);
 
         MenuItem home = new MenuItem();
         home.setName("Home");
@@ -85,6 +100,9 @@ public class AdminController {
         model.addAttribute("employees", employees);
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("user", new UserEntity());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", userPage.getTotalPages());
+        // model.addAttribute("icons", icons); /* This is optional now, and it will work ony if you modify the frontend too */
         return "admin/roles";
     }
 
@@ -98,7 +116,7 @@ public class AdminController {
         for (Long roleId : roles) {
             RoleEntity role = roleRepository.findById(roleId).orElseThrow(); // Add appropriate error handling
             user.addRole(role);
-            userService.save(user);
+            userService.update(user);
         }
 
         return "redirect:/admin/roles";

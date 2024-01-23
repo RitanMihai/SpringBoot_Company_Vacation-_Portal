@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Hierarchy</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body class="bg-gray-100 p-8">
+<div class="max-w-2xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">User Hierarchy</h1>
+
+    <!-- Recursive Thymeleaf fragment to display user hierarchy -->
+    <div th:fragment="displayUserHierarchy(users)">
+        <ul>
+            <li th:each="user : ${users}">
+                <!-- Display user information -->
+                <div class="border p-4 mb-4">
+                    <span th:text="${user.username}"></span>
+                    <span> - Manager: <span th:if="${user.manager}" th:text="${user.manager.username}">No Manager</span></span>
+                </div>
+
+                <!-- Recursively display child users -->
+                <div th:if="${#lists.isNotEmpty(user.subordinates)}" th:replace="~{:: displayUserHierarchy(users=${user.subordinates})}"></div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Call the fragment with the list of users -->
+    <div th:replace="~{:: displayUserHierarchy(users=${users})}"></div>
+</div>
+</body>
+</html>

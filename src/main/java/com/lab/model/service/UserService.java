@@ -5,6 +5,10 @@ import com.lab.model.model.RoleEntity;
 import com.lab.model.model.UserEntity;
 import com.lab.model.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -62,6 +66,11 @@ public class UserService implements UserDetailsService {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
     }
+
+    public void update(UserEntity user) {
+        userRepository.save(user);
+    }
+
     public void login(UserEntity user, Authentication authentication) {
         UserDetails userDetails = this.loadUserByUsername(user.getEmail());
         if(Objects.isNull(userDetails))
@@ -77,10 +86,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(adminEmail);
     }
 
-    public List<UserEntity> findAll() {
-        return userRepository.findAll();
+    public Page<UserEntity> findAll(int pageNumber, int pageSize) {
+        return userRepository.findAll(PageRequest.of(pageNumber, pageSize));
     }
 
+    public Page<UserEntity> findAll(Pageable page) {
+        return userRepository.findAll(page);
+    }
     public UserEntity findById(Long userId) {
         return userRepository.findById(userId).get();
     }

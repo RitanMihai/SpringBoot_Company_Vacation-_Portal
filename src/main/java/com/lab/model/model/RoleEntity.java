@@ -1,5 +1,6 @@
 package com.lab.model.model;
 
+import com.lab.model.config.util.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,5 +26,9 @@ public class RoleEntity {
 
     public void addUser(UserEntity user) {
         users.add(user);
+    }
+
+    public void setRole(Role role) {
+        this.name= role.name();
     }
 }
